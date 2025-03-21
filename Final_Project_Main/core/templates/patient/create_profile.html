@@ -1,0 +1,68 @@
+{% extends 'patient/base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="col-md-6">
+        <div class="card shadow-lg">
+            <div class="card-header text-center" style="background-color: #007bff; color: white; font-weight: bold;">
+                Create Your Profile
+            </div>
+            <div class="card-body">
+                <form action="{% url 'create_profile' %}" method="POST">
+                    {% csrf_token %}
+
+                    <!-- Date of Birth -->
+                    <div class="form-group">
+                        <label for="birth_date">Date of Birth</label>
+                        <input type="date" id="birth_date" name="birth_date" class="form-control text-center"
+                            min="1950-01-01" max="{{ today }}" required>
+                    </div>
+
+                    <!-- Gender Selection -->
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select class="form-control text-center" name="gender" id="gender" required>
+                            <option value="">Please Select Your Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+
+                    <!-- Country -->
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control text-center" name="country" id="country" placeholder="Country" required>
+                    </div>
+
+                    <!-- Region -->
+                    <div class="form-group">
+                        <label for="region">Region</label>
+                        <input type="text" class="form-control text-center" name="region" id="region" placeholder="Region" required>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-lg btn-primary">
+                            Save
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Display Messages -->
+                {% if messages %}
+                    <div class="mt-3">
+                        {% for message in messages %}
+                            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %} text-center">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
